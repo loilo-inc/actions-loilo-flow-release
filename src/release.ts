@@ -27,8 +27,8 @@ async function getLatestTag(p: {
   if (!p.includeRc) {
     list = list.filter((v) => !!v.match(/^v?(\d+)\.(\d+)\.(\d+)$/));
   }
-  const [latest] = semver.rsort(list);
-  return latest;
+  const prev = semver.rsort(list)[1];
+  return prev;
 }
 
 export async function createRelease({
