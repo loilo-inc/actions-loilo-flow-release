@@ -4,7 +4,7 @@ import * as cp from "child_process";
 
 function getExecOutput(cmd: string, args: string[]) {
   const p = cp.spawn(cmd, args);
-  console.log(cmd, ...args)
+  console.log(cmd, ...args);
   return new Promise<{
     exitCode: number;
     stdout: string;
@@ -68,7 +68,7 @@ export async function createRelease({
   const latest = await getLatestTag({ includeRc: !!tag.match(/-rc\d+$/) });
   let body = await getLogs(tag, latest);
   body = body.replace("\n", "<br />");
-  console.log(body)
+  console.log(body);
   const github = getOctokit(token);
   let release_id: number | undefined;
   try {
