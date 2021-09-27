@@ -20,7 +20,7 @@ async function main() {
   try {
     const state = await createRelease({ tag, owner, repo, token: githubToken });
     core.info(
-      `Release ${state}!: https://github.com/${githubRepo}/releases/tag/${githubRef}`
+      `Release ${state}!: https://github.com/${githubRepo}/releases/tag/${tag}`
     );
   } catch (e) {
     core.setFailed((e as Error).message);
