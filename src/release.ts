@@ -1,6 +1,27 @@
-import { getExecOutput } from "@actions/exec";
 import { getOctokit } from "@actions/github";
 import * as semver from "semver";
+import * as cp from "child_process";
+
+function getExecOutput(cmd: string, args: string[]) {
+  const p = cp.spawn(cmd, args);
+  return new Promise<{
+    exitCode: number;
+    stdout: string;
+    stderr: string;
+  }>((resolve) => {
+    let stdout: string = "";
+    let stderr: string = "";
+    p.stdout.on("data", (d) => (stdout += d));
+    p.stderr.on("data", (d) => (stderr += d));
+    p.on("exit", (code) =>
+      resolve({
+        exitCode: code ?? 1,
+        stdout: stdout,
+        stderr: stderr,
+      })
+    );
+  });
+}
 
 async function getLogs(tag: string, toTag: string | undefined) {
   const args = ["log", "--oneline"];
