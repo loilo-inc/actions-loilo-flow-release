@@ -6,8 +6,6 @@ async function getLogs(tag: string, toTag: string | undefined) {
   const args = ["log", "--oneline"];
   if (toTag) {
     args.push(tag + "..." + toTag);
-  } else {
-    args.push(tag);
   }
   const output = await getExecOutput("git", args);
   if (output.exitCode !== 0) {
@@ -46,7 +44,8 @@ export async function createRelease({
     throw new Error("invalid semver: " + tag);
   }
   const latest = await getLatestTag({ includeRc: !!tag.match(/-rc\d+$/) });
-  const body = await getLogs(tag, latest);
+  let body = await getLogs(tag, latest);
+  body = body.replace("\n", "<br />");
   const github = getOctokit(token);
   let release_id: number | undefined;
   try {
@@ -56,7 +55,7 @@ export async function createRelease({
   if (release_id != null) {
     // update
     await github.repos.updateRelease({ release_id, body, owner, repo });
-    return "updated"
+    return "updated";
   } else {
     // create
     await github.repos.createRelease({
@@ -66,6 +65,6 @@ export async function createRelease({
       tag_name: tag,
       name: tag,
     });
-    return "created"
+    return "created";
   }
 }
