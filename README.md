@@ -10,7 +10,7 @@ See `action.yml`
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v1
-        - uses: loilo-inc/actions-loilo-flow-release
+        - uses: loilo-inc/actions-loilo-flow-release@main
           with:
             github-repository: ${{ github.repository }}
             github-token: ${{ github.token }}

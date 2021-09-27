@@ -1,0 +1,15 @@
+name: CI
+on: [tag]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+      - uses: loilo-inc/actions-loilo-flow-release@main
+        with:
+            github-repository: ${{ github.repository }}
+            github-token: ${{ github.token }}
+            github-ref: ${{ github.ref }}
