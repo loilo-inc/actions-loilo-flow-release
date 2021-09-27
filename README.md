@@ -12,7 +12,7 @@ See `action.yml`
         - uses: actions/checkout@v2
           with:
            # !IMPORTANT!
-           # '0' means all histories. Set a better number for your use-case.
+           # '0' means all histories, tags and branches.
             fetch-depth: 0
         - uses: loilo-inc/actions-loilo-flow-release@main
           with:
