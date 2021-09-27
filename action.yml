@@ -1,0 +1,16 @@
+name: 'LoiLo Flow Release'
+description: 'Create Github release based on loilo-flow'
+author: 'LoiLo'
+inputs: 
+  github-ref:
+    description: "Git tag or branch or sha1 to deploy."
+    required: true
+  github-repository:
+    description: ":owner/:repo style github repository. Use github.repository."
+    required: true
+  github-token:
+    description: "Github Token to create deployment on the repository. Use secrets.GITHUB_TOKEN."
+    required: true
+runs:
+  using: 'node12'
+  main: 'lib/index.js'
