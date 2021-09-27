@@ -44,6 +44,7 @@ async function getLatestTag(p: {
     throw new Error(output.stderr);
   }
   let list = output.stdout.split("\n").filter((v) => semver.valid(v));
+  console.log(list);
   if (!p.includeRc) {
     list = list.filter((v) => !!v.match(/^v?(\d+)\.(\d+)\.(\d+)$/));
   }
