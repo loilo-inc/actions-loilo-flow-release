@@ -2,28 +2,28 @@ import { getExecOutput } from "@actions/exec";
 import { getOctokit } from "@actions/github";
 import * as semver from "semver";
 
-async function getLogs(tag: string, toTag: string) {
-  const output = await getExecOutput("git", [
-    "log",
-    "--oneline",
-    tag,
-    "...",
-    toTag,
-  ]);
+async function getLogs(tag: string, toTag: string | undefined) {
+  const args = ["log", "--oneline", tag];
+  if (toTag) {
+    args.push("...", toTag);
+  }
+  const output = await getExecOutput("git", args);
   if (output.exitCode !== 0) {
     throw new Error(output.stderr);
   }
   return output.stdout;
 }
 
-async function getLatestTag(p: { includeRc: boolean }): Promise<string> {
+async function getLatestTag(p: {
+  includeRc: boolean;
+}): Promise<string | undefined> {
   const output = await getExecOutput("git", ["tag"]);
   if (output.exitCode !== 0) {
     throw new Error(output.stderr);
   }
   let list = output.stdout.split("\n").filter((v) => semver.valid(v));
   if (!p.includeRc) {
-    list = list.filter((v) => !!v.match(/^(\d+)\.(\d+).(\d+)$/));
+    list = list.filter((v) => !!v.match(/^v?(\d+)\.(\d+)\.(\d+)$/));
   }
   const [latest] = semver.rsort(list);
   return latest;
