@@ -9,7 +9,11 @@ See `action.yml`
     deploy:
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v1
+        - uses: actions/checkout@v2
+          with:
+           # !IMPORTANT!
+           # '0' means all histories. Set a better number for your use-case.
+            fetch-depth: 0
         - uses: loilo-inc/actions-loilo-flow-release@main
           with:
             github-repository: ${{ github.repository }}
