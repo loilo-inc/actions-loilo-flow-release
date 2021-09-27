@@ -12,5 +12,5 @@ inputs:
     description: "Github Token to create deployment on the repository. Use secrets.GITHUB_TOKEN."
     required: true
 runs:
-  using: 'node14'
+  using: 'node12'
   main: 'lib/index.js'
