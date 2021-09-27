@@ -10,7 +10,7 @@ async function main() {
     return;
   }
   const tag = m[1];
-  if (semver.valid(tag)) {
+  if (!semver.valid(tag)) {
     core.warning("Not semver. skip: " + tag);
     return;
   }
