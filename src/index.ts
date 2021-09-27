@@ -17,14 +17,10 @@ async function main() {
   const githubRepo = core.getInput("github-repository");
   const [owner, repo] = githubRepo.split("/");
   const githubToken = core.getInput("github-token");
-  try {
-    await createRelease({ tag, owner, repo, token: githubToken });
+  await createRelease({ tag, owner, repo, token: githubToken });
     core.info(
       `Release created!: https://github.com/${githubRepo}/releases/tag/${githubRef}`
     );
-  } catch (e) {
-    core.error(e as Error);
-  }
 }
 if (require.main === module) {
   main();

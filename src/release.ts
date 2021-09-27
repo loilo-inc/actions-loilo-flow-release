@@ -40,8 +40,8 @@ export async function createRelease({
   repo: string;
   owner: string;
 }) {
-  if (semver.valid(tag)) {
-    throw new Error("invalid semver");
+  if (!semver.valid(tag)) {
+    throw new Error("invalid semver: "+tag);
   }
   const latest = await getLatestTag({ includeRc: !!tag.match(/-rc\d+$/) });
   const body = await getLogs(tag, latest);
